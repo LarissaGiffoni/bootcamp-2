@@ -30,5 +30,5 @@ sortear um filme aleatório, exibindo pôster, ano de lançamento e nota.
 4. Abra `index.html` no navegador
 
 ## Links
-- **Aplicação no ar (GitHub Pages):** https://LarissGiffoni.github.io/cinefinder/
+- **Aplicação no ar (GitHub Pages):** https://larissagiffoni.github.io/bootcamp-2/ 
 - **Repositório:** https://github.com/LarissaGiffoni/bootcamp-2.git
