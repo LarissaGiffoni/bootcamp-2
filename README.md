@@ -1,7 +1,8 @@
 # CineFinder — Recomendação de Filmes
 
 ## Autor
-Larissa Moreira de Alencar Giffoni Lacerda - 22551663
+Larissa Moreira de Alencar Giffoni Lacerda 
+Matrícula -  22551663
 
 ## Descrição
 Aplicação web que permite descobrir filmes por gênero, buscar pelo título ou
