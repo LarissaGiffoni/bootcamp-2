@@ -1,0 +1,270 @@
+/* ============================================================
+   CineFinder — Bootcamp II · Etapa 01
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Cabeçalho ---------- */
+header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  text-align: center;
+  padding: 28px 16px;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+header h1 { font-size: 1.8rem; letter-spacing: 1px; }
+header p { color: #a0a0c0; margin-top: 4px; font-size: .9rem; }
+
+/* ---------- Controles (busca, select, botões) ---------- */
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 24px 16px 16px;
+}
+
+.controles input,
+.controles select {
+  padding: 10px 14px;
+  border: 1px solid #3a3a5a;
+  border-radius: 8px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-size: .95rem;
+  outline: none;
+}
+
+.controles input { width: min(260px, 60vw); }
+.controles input:focus,
+.controles select:focus { border-color: #e50914; }
+
+.controles button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #e50914;
+  color: #fff;
+  font-size: .95rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.controles button:hover { background: #b20710; }
+#botao-aleatorio { background: #f5c518; color: #1a1a2e; font-weight: 600; }
+#botao-aleatorio:hover { background: #d4a800; }
+#botao-modo-gosto { background: #2563eb; }
+#botao-modo-gosto:hover { background: #1d4ed8; }
+
+/* ---------- Área de resultado ---------- */
+#resultado {
+  padding: 0 16px 40px;
+  flex: 1;
+}
+
+.grade-filmes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.cartao-filme {
+  background: #1a1a2e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.4);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.cartao-filme:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(229,9,20,.2);
+}
+
+.cartao-filme img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+}
+
+.cartao-filme .info {
+  padding: 12px;
+}
+
+.cartao-filme h3 {
+  font-size: .95rem;
+  color: #fff;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cartao-filme .meta {
+  font-size: .8rem;
+  color: #a0a0c0;
+}
+
+.cartao-filme .nota {
+  display: inline-block;
+  background: #f5c518;
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: .75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.carregando,
+.erro {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1rem;
+}
+
+.carregando { color: #a0a0c0; }
+
+.erro {
+  background: #2a1a1a;
+  color: #f87171;
+  border: 1px solid #4a2a2a;
+  border-radius: 10px;
+  max-width: 420px;
+  margin: 20px auto;
+  line-height: 1.6;
+}
+
+/* ---------- Paginação ---------- */
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  padding: 8px 16px 40px;
+}
+
+.paginacao button {
+  min-width: 38px;
+  padding: 8px 12px;
+  border: 1px solid #3a3a5a;
+  border-radius: 8px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.paginacao button:hover {
+  border-color: #e50914;
+  color: #fff;
+}
+
+.paginacao button.ativo {
+  background: #e50914;
+  color: #fff;
+  border-color: #e50914;
+  font-weight: 700;
+}
+
+.paginacao button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* ---------- Modo Gosto ---------- */
+.escondido { display: none !important; }
+
+.quiz-container {
+  max-width: 420px;
+  margin: 20px auto;
+  padding: 24px;
+  background: #1a1a2e;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+
+.quiz-titulo {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.quiz-progresso {
+  font-size: .85rem;
+  color: #a0a0c0;
+  margin-bottom: 20px;
+}
+
+.quiz-botoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-sim,
+.btn-nao {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+.btn-sim { background: #16a34a; color: #fff; }
+.btn-nao { background: #dc2626; color: #fff; }
+
+.btn-sim:hover, .btn-nao:hover { transform: scale(1.04); }
+
+.btn-cancelar {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 18px;
+  background: transparent;
+  color: #a0a0c0;
+  border: 1px solid #3a3a5a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+
+.btn-cancelar:hover { color: #fff; border-color: #e50914; }
+
+.titulo-secao {
+  text-align: center;
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 30px 0 20px;
+}
+
+.centro { text-align: center; padding-bottom: 40px; }
+
+/* ---------- Rodapé ---------- */
+footer {
+  text-align: center;
+  padding: 16px;
+  color: #555;
+  font-size: .8rem;
+  border-top: 1px solid #1a1a2e;
+}
+
+footer a { color: #e50914; }

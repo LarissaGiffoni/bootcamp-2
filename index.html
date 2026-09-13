@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineFinder — Recomendação de Filmes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎬 CineFinder</h1>
+    <p>Descubra filmes por gênero, busque pelo título ou receba recomendações</p>
+  </header>
+
+  <main>
+    <!-- ===================== MODO NORMAL ===================== -->
+    <section id="modo-normal">
+      <section class="controles">
+        <input type="text" id="campo-busca" placeholder="Buscar filme pelo título..." autocomplete="off">
+        <button id="botao-buscar">Buscar</button>
+
+        <select id="filtro-genero">
+          <option value="">Todos os gêneros</option>
+        </select>
+
+        <button id="botao-aleatorio">🎲 Surpreenda-me</button>
+        <button id="botao-modo-gosto">💡 Descobrir pelo meu gosto</button>
+      </section>
+
+      <section id="resultado" aria-live="polite"></section>
+
+      <!-- Paginação aparece aqui embaixo -->
+      <nav id="paginacao" class="paginacao"></nav>
+    </section>
+
+    <!-- ===================== MODO GOSTO ===================== -->
+    <section id="modo-gosto" class="escondido">
+      <div class="quiz-container">
+        <p class="quiz-titulo">Você gosta deste filme?</p>
+        <p class="quiz-progresso" id="quiz-progresso">Filme 1 de 5</p>
+
+        <div id="quiz-filme"></div>
+
+        <div class="quiz-botoes">
+          <button id="botao-nao-gostei" class="btn-nao">👎 Não gostei</button>
+          <button id="botao-gostei" class="btn-sim">👍 Gostei</button>
+        </div>
+
+        <button id="botao-cancelar-quiz" class="btn-cancelar">Cancelar</button>
+      </div>
+    </section>
+
+    <!-- ===================== RESULTADO DO QUIZ ===================== -->
+    <section id="modo-resultado-quiz" class="escondido">
+      <h2 class="titulo-secao">Baseado nos seus gostos, recomendamos:</h2>
+      <div id="resultado-quiz"></div>
+      <div class="centro">
+        <button id="botao-voltar" class="btn-cancelar">← Voltar ao início</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Dados fornecidos pela <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a>
+    · Bootcamp II — Etapa 01
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
