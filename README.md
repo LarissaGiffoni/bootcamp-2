@@ -1,7 +1,7 @@
 # CineFinder — Recomendação de Filmes
 
 ## Autor
-Seu Nome Completo — Matrícula XXXXXXX
+Larissa Moreira de Alencar Giffoni Lacerda - 22551663
 
 ## Descrição
 Aplicação web que permite descobrir filmes por gênero, buscar pelo título ou
@@ -24,11 +24,11 @@ sortear um filme aleatório, exibindo pôster, ano de lançamento e nota.
 - Mensagens de erro amigáveis para busca sem resultado e falha de conexão
 
 ## Como executar localmente
-1. Clone: `git clone https://github.com/SEU-USUARIO/cinefinder.git`
+1. Clone: `git clone https://github.com/LarissaGiffoni/bootcamp-2.git`
 2. Obtenha uma API Key gratuita em https://www.themoviedb.org/settings/api
 3. Cole a chave no arquivo `script.js` (linha 10)
 4. Abra `index.html` no navegador
 
 ## Links
-- **Aplicação no ar (GitHub Pages):** https://SEU-USUARIO.github.io/cinefinder/
-- **Repositório:** https://github.com/SEU-USUARIO/cinefinder
+- **Aplicação no ar (GitHub Pages):** https://LarissGiffoni.github.io/cinefinder/
+- **Repositório:** https://github.com/LarissaGiffoni/bootcamp-2.git
