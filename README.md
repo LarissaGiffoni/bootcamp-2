@@ -36,5 +36,33 @@ Aplicação web que permite descobrir filmes por gênero, buscar pelo título ou
 ### 🐳 Como executar a aplicação via Docker
 Para rodar a aplicação em qualquer máquina com Docker instalado, execute o comando:
 
-```bash
 docker run -d -p 8080:80 larissagiffoni/bootcamp2-app:latest
+
+Depois, acesse `http://localhost:8080` no navegador.
+
+---
+
+## 🎮 Evidências das Sidequests
+
+### SQ1 · .dockerignore
+Foi criado um arquivo `.dockerignore` excluindo pastas e arquivos desnecessários (como `.git`, `README.md`, etc.).
+**Por que isso melhora o build?** Ao ignorar esses arquivos, o Docker não precisa enviar todo o histórico do Git e arquivos pesados para o contexto de build. Isso deixa o processo muito mais rápido e a imagem final menor.
+
+### SQ2 · Versionamento de Imagem
+A imagem foi publicada no Docker Hub com três tags: `1.0` (primeira versão), `1.1` (ajustes) e `latest` (mais recente).
+
+### SQ3 · Descrição no Docker Hub
+A página do repositório no Docker Hub foi preenchida com a descrição do projeto, o comando `docker run` e o link do GitHub.
+
+### SQ4 · Explorando a orquestração
+Para comprovar a execução de múltiplos containers, dois containers da aplicação foram rodados simultaneamente nas portas 8080 e 8081. O print do comando `docker ps` está salvo neste repositório como `print-docker-ps.png`.
+
+**Se eu tivesse 100 containers, como gerenciaria?**
+Gerenciar 100 containers manualmente com `docker run` seria inviável. Para isso, utiliza-se um **orquestrador de containers** como o **Kubernetes**. Ele organiza os containers em um **Cluster** (conjunto de máquinas). Em vez de rodar containers soltos, o Kubernetes usa o conceito de **Pod** (a menor unidade, que pode conter um ou mais containers) e **Réplica** (garante que o número desejado de Pods esteja sempre rodando, substituindo automaticamente os que falham). O Kubernetes também faz o balanceamento de carga e escala a aplicação conforme a demanda.
+
+---
+
+## 🔗 Links do Projeto
+- **Aplicação no ar (GitHub Pages):** https://larissagiffoni.github.io/bootcamp-2/ 
+- **Repositório no GitHub:** https://github.com/LarissaGiffoni/bootcamp-2
+- **Repositório no Docker Hub:** https://hub.docker.com/r/larissagiffoni/bootcamp2-app
