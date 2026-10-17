@@ -1,6 +1,6 @@
 /* ============================================================
-   CineFinder — Bootcamp II · Etapa 01
-   API: TMDB (The Movie Database)
+   CineFinder — Bootcamp II · Etapa 02
+   API: TMDB (The Movie Database) + Supabase (Favoritos)
    ============================================================ */
 
 // ⚠️ SUBSTITUA "SUA_CHAVE_AQUI" pela sua API Key do TMDB
@@ -8,6 +8,13 @@ const API_KEY = "7019b2b0b035a4ac4e147823b5238467";
 
 const URL_BASE = "https://api.themoviedb.org/3";
 const URL_IMAGEM = "https://image.tmdb.org/t/p/w300";
+
+// ============================================================
+// CONEXÃO COM O SUPABASE
+// ============================================================
+const supabaseUrl = 'https://uyxlgxfbirfhmmrduhof.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5eGxneGZiaXJmaG1tcmR1aG9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5ODk0NDUsImV4cCI6MjEwNzU2NTQ0NX0.Mgm3GALZgjGOPHv8-DEEVrH6_WdpHUoSrfwavPdQnhg';
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 // ------- Elementos do modo normal -------
 const campoBusca = document.getElementById("campo-busca");
@@ -70,7 +77,7 @@ async function carregarGeneros() {
 }
 
 /* ============================================================
-   MONTAGEM DE CARTÃO
+   MONTAGEM DE CARTÃO (Agora com botão de Favoritar)
    ============================================================ */
 function montarCartao(filme) {
   const poster = filme.poster_path
@@ -84,6 +91,9 @@ function montarCartao(filme) {
   const ano = filme.release_date ? filme.release_date.split("-")[0] : "—";
   const nota = filme.vote_average ? filme.vote_average.toFixed(1) : "N/A";
 
+  // Convertendo o objeto do filme para uma string JSON segura para colocar no onclick
+  const filmeString = JSON.stringify(filme).replace(/'/g, "&#39;");
+
   return `
     <article class="cartao-filme">
       ${imagemHTML}
@@ -91,6 +101,9 @@ function montarCartao(filme) {
         <h3 title="${filme.title}">${filme.title}</h3>
         <p class="meta">${ano}</p>
         <span class="nota">★ ${nota}</span>
+        <button class="btn-favoritar" onclick='salvarFavorito(${filmeString})' style="margin-top: 10px; width: 100%; padding: 8px; background: #e50914; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          ⭐ Favoritar
+        </button>
       </div>
     </article>`;
 }
@@ -377,6 +390,90 @@ function voltarAoInicio() {
 }
 
 /* ============================================================
+   FUNÇÕES DO SUPABASE (SALVAR / LISTAR / DELETAR)
+   ============================================================ */
+
+// Função chamada quando o usuário clica no botão "⭐ Favoritar"
+async function salvarFavorito(filme) {
+  const botao = event.target; // Pega o botão que foi clicado
+  botao.textContent = "Salvando...";
+  botao.disabled = true;
+
+  const { error } = await supabaseClient
+    .from('favoritos')
+    .insert([
+      { 
+        titulo: filme.title, 
+        ano: filme.release_date ? filme.release_date.split('-')[0] : '—', 
+        poster: filme.poster_path ? `${URL_IMAGEM}${filme.poster_path}` : '', 
+        nota: filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A'
+      }
+    ]);
+
+  if (error) {
+    console.error('Erro ao salvar:', error);
+    alert('Erro ao salvar o filme. Veja o console (F12).');
+    botao.textContent = "⭐ Favoritar";
+    botao.disabled = false;
+  } else {
+    botao.textContent = "✅ Salvo!";
+    botao.style.background = "#28a745"; // Fica verde
+    listarFavoritos(); // Atualiza a lista na tela
+  }
+}
+
+// Função para buscar os favoritos no banco e desenhar na tela
+async function listarFavoritos() {
+  const container = document.getElementById("lista-favoritos");
+  if (!container) return;
+
+  const { data, error } = await supabaseClient
+    .from('favoritos')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao listar:', error);
+    container.innerHTML = '<p class="erro">Erro ao carregar favoritos.</p>';
+    return;
+  }
+
+  if (data.length === 0) {
+    container.innerHTML = '<p style="color: #888;">Você ainda não tem filmes favoritos.</p>';
+    return;
+  }
+
+  container.innerHTML = data.map(filme => `
+    <article class="cartao-filme" style="width: 200px;">
+      <img src="${filme.poster}" alt="${filme.titulo}" style="width: 100%; border-radius: 8px;">
+      <div class="info">
+        <h3 title="${filme.titulo}">${filme.titulo}</h3>
+        <p class="meta">${filme.ano}</p>
+        <span class="nota">★ ${filme.nota}</span>
+        <button onclick="removerFavorito(${filme.id})" style="margin-top: 10px; width: 100%; padding: 8px; background: #444; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          ❌ Excluir
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+// Função para deletar um filme do banco
+async function removerFavorito(id) {
+  const { error } = await supabaseClient
+    .from('favoritos')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Erro ao deletar:', error);
+    alert('Não foi possível excluir.');
+  } else {
+    listarFavoritos(); // Atualiza a lista
+  }
+}
+
+/* ============================================================
    EVENTOS
    ============================================================ */
 function dispararBusca() {
@@ -403,3 +500,4 @@ botaoVoltar.addEventListener("click", voltarAoInicio);
 
 // Inicialização
 carregarGeneros();
+listarFavoritos(); // Carrega os favoritos assim que a página abre

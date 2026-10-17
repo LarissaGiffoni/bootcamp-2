@@ -58,13 +58,25 @@
         <button id="botao-voltar" class="btn-cancelar">← Voltar ao início</button>
       </div>
     </section>
+
+    <!-- ===================== MEUS FAVORITOS (SUPABASE) ===================== -->
+    <section id="meus-favoritos" style="margin-top: 40px; border-top: 2px solid #333; padding-top: 20px;">
+      <h2 class="titulo-secao">⭐ Meus Filmes Favoritos</h2>
+      <div id="lista-favoritos" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <!-- Os filmes salvos vão aparecer aqui pelo JavaScript -->
+      </div>
+    </section>
+
   </main>
 
   <footer>
     Dados fornecidos pela <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a>
-    · Bootcamp II — Etapa 01
+    · Bootcamp II — Etapa 02
   </footer>
 
+  <!-- Importando a biblioteca do Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Seu script principal -->
   <script src="script.js"></script>
 </body>
 </html>
